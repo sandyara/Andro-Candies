@@ -6,18 +6,18 @@ An Utility and Libraries for Android Beginners to begin as Professional Develope
 
  ```
  allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+ }
  ```
 
  ## Step 2. Add the dependency
  
 ```
  dependencies {
-			implementation 'com.github.SandyAra:Andro-Candies:0.1'
-	}
+	implementation 'com.github.SandyAra:Andro-Candies:0.1'
+ }
 ```
 	
