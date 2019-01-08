@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 
 import ara.sandy.candies.R;
+import ara.sandy.candies.lazyloader.ImageLoader;
 
 
 /**Utils
@@ -71,6 +72,28 @@ public class Utility {
             Log.e("LOAD IMAGE ERROR",ex.getMessage());
         }
 
+    }
+
+    /** Load Thumbnail
+     *
+     * @param context
+     * @param img
+     * @param imgPath
+     */
+    public static void loadThumbnail(Context context, final ImageView img, final String imgPath){
+
+        try{
+            ImageLoader imgLoader = new ImageLoader(context);
+            if (imgPath != null && !(imgPath.equals(""))) {
+                imgLoader.DisplayImage(imgPath,img);
+                img.setTag(imgPath);
+            } else {
+                img.setImageResource(R.drawable.ic_no_photos);
+            }
+        } catch (Exception ex){
+            img.setImageResource(R.drawable.ic_no_photos);
+            Log.e("LOAD THUMBNAIL ERROR",ex.getMessage().toString());
+        }
     }
 
     /**set date to TextView
