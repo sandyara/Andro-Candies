@@ -13,7 +13,9 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.widget.AppCompatImageView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
@@ -398,6 +400,10 @@ public class Utility {
         return type;
     }
 
+    //Email Validation
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && target != null && Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 
     /** Save Bitmap to Local Path
      *
