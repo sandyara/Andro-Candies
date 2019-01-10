@@ -13,7 +13,9 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.widget.AppCompatImageView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
@@ -41,6 +43,7 @@ import java.util.Date;
 import java.util.List;
 
 import ara.sandy.candies.R;
+import ara.sandy.candies.lazyloader.ImageLoader;
 
 
 /**Utils
@@ -71,6 +74,28 @@ public class Utility {
             Log.e("LOAD IMAGE ERROR",ex.getMessage());
         }
 
+    }
+
+    /** Load Thumbnail
+     *
+     * @param context
+     * @param img
+     * @param imgPath
+     */
+    public static void loadThumbnail(Context context, final ImageView img, final String imgPath){
+
+        try{
+            ImageLoader imgLoader = new ImageLoader(context);
+            if (imgPath != null && !(imgPath.equals(""))) {
+                imgLoader.DisplayImage(imgPath,img);
+                img.setTag(imgPath);
+            } else {
+                img.setImageResource(R.drawable.ic_no_photos);
+            }
+        } catch (Exception ex){
+            img.setImageResource(R.drawable.ic_no_photos);
+            Log.e("LOAD THUMBNAIL ERROR",ex.getMessage().toString());
+        }
     }
 
     /**set date to TextView
@@ -375,6 +400,10 @@ public class Utility {
         return type;
     }
 
+    //Email Validation
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && target != null && Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 
     /** Save Bitmap to Local Path
      *
