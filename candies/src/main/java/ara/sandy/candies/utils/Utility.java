@@ -400,6 +400,29 @@ public class Utility {
         return type;
     }
 
+    /**
+     * Resize Bitmap
+     *
+     * @param image
+     * @param maxSize
+     * @return
+     */
+    public static Bitmap resizeBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+
     //Email Validation
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && target != null && Patterns.EMAIL_ADDRESS.matcher(target).matches();
