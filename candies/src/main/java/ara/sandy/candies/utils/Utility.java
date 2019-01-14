@@ -98,6 +98,29 @@ public class Utility {
         }
     }
 
+    /** Load Thumbnail
+     *
+     * @param context
+     * @param img
+     * @param imgPath
+     */
+    public static void loadThumbnail(Context context, final ImageView img, final String imgPath, int size){
+
+        try{
+            ImageLoader imgLoader = new ImageLoader(context,size);
+            if (imgPath != null && !(imgPath.equals(""))) {
+                imgLoader.DisplayImage(imgPath,img);
+                img.setTag(imgPath);
+            } else {
+                img.setImageResource(R.drawable.ic_no_photos);
+            }
+        } catch (Exception ex){
+            img.setImageResource(R.drawable.ic_no_photos);
+            Log.e("LOAD THUMBNAIL ERROR",ex.getMessage().toString());
+        }
+    }
+
+
     /**set date to TextView
      * @param cxt Context
      * @param format -- Custom Date Format

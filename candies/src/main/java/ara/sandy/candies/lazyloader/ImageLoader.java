@@ -27,6 +27,9 @@ public class ImageLoader {
 
     MemoryCache memoryCache = new MemoryCache();
     FileCache fileCache;
+
+    int REQUIRED_SIZE = 100;
+
     private Map<ImageView, String> imageViews = Collections
             .synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
@@ -34,6 +37,12 @@ public class ImageLoader {
     Handler handler = new Handler();
 
     public ImageLoader(Context context) {
+        fileCache = new FileCache(context);
+        executorService = Executors.newFixedThreadPool(5);
+    }
+
+    public ImageLoader(Context context, int REQUIRED_SIZE) {
+        this.REQUIRED_SIZE = REQUIRED_SIZE;
         fileCache = new FileCache(context);
         executorService = Executors.newFixedThreadPool(5);
     }
@@ -99,7 +108,6 @@ public class ImageLoader {
             stream1.close();
 
             // Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE = 100;
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
             int scale = 1;
             while (true) {
