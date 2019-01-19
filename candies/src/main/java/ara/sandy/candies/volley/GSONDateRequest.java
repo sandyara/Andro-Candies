@@ -1,6 +1,4 @@
-package ara.sandy.candies.volley;/**
- * Created by Adi-Loch on 3/10/2017.
- */
+package ara.sandy.candies.volley;
 
 import android.util.Log;
 
@@ -16,7 +14,6 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-
 
 /**
  * Volley adapter for JSON requests with POST method that will be parsed into Java objects by Gson.
