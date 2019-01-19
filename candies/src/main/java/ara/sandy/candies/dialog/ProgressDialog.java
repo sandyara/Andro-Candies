@@ -1,10 +1,12 @@
-package ara.sandy.candies;
+package ara.sandy.candies.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
+
+import ara.sandy.candies.R;
 
 public class ProgressDialog extends Dialog {
 
