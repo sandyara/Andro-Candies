@@ -1,8 +1,10 @@
 package ara.sandy.utils;
 
+import android.content.IntentFilter;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,5 +28,10 @@ public class MainActivity extends AppCompatActivity {
                 });
             avd.start();
         }
+
+        NetworkReceiver br = new NetworkReceiver(true,R.style.AppTheme);
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(br, intentFilter);
     }
+
 }
