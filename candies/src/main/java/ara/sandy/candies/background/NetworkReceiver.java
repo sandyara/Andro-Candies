@@ -63,8 +63,7 @@ public class NetworkReceiver extends BroadcastReceiver {
 
             AraRequestQueue.saveOffline((Activity) context);
         }
-
-        Toast.makeText(context, status, Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, status, Toast.LENGTH_LONG).show();
     }
 
     public static int getConnectivityStatus(Context context) {

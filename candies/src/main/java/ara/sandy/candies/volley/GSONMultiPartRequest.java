@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -88,6 +89,11 @@ public class GSONMultiPartRequest extends Request<NetworkResponse> {
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return (mParams != null) ? mParams : super.getParams();
+    }
+
+    public String getStringParams(){
+        Gson gson = new Gson();
+        return gson.toJson(mParams);
     }
 
     @Override
