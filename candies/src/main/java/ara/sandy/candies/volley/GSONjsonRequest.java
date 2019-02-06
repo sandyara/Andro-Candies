@@ -27,7 +27,6 @@ public class GSONjsonRequest<T> extends Request<T> {
     private Map<String, String> params;
     private Response.Listener<T> listener;
 
-
     /**
      * Make a GET request and return a parsed object from JSON.
      *
@@ -42,7 +41,6 @@ public class GSONjsonRequest<T> extends Request<T> {
      * @param clazz Relevant class object, for Gson's reflection
      * @param listener
      */
-
 
     public GSONjsonRequest(int method, String url, Object dataIn, Class<T> clazz, Map<String, String> headers,
                            Response.Listener<T> listener, Response.ErrorListener errorListener) {
@@ -60,6 +58,15 @@ public class GSONjsonRequest<T> extends Request<T> {
         return headers != null ? headers : super.getHeaders();
     }
 
+    @Override
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public String getStringParams(){
+        Gson gson = new Gson();
+        return gson.toJson(dataIn);
+    }
 
     @Override
     public String getBodyContentType() {
