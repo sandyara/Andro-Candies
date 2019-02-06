@@ -79,6 +79,10 @@ public class GSONRequest<T> extends Request<T> {
         return params;
     }
 
+    public String getStringParams(){
+        Gson gson = new Gson();
+        return gson.toJson(dataIn);
+    }
 
     @Override
     protected void deliverResponse(T response) {

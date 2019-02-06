@@ -73,10 +73,13 @@ public class GSONDateRequest<T> extends Request<T> {
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-
         return params;
     }
 
+    public String getStringParams(){
+        Gson gson = new Gson();
+        return gson.toJson(dataIn);
+    }
 
     @Override
     protected void deliverResponse(T response) {
