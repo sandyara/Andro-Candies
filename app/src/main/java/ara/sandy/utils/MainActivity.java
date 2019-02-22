@@ -19,12 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +29,6 @@ import ara.sandy.candies.background.NetworkReceiver;
 import ara.sandy.candies.volley.AraRequestQueue;
 import ara.sandy.candies.volley.GSONjsonRequest;
 
-import static com.android.volley.Request.Method.GET;
 import static com.android.volley.Request.Method.POST;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         Map<String,String> header = new HashMap<String,String>();
         header.put("Accept","application/json");
 
-
         GSONjsonRequest gsoNjsonRequest = new GSONjsonRequest
                 (POST, url,params,
                         Result.class, header,
@@ -111,11 +105,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show();
-
             }
         };
     }
-
 
 }
 

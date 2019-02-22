@@ -7,11 +7,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -245,7 +248,7 @@ public class Utility {
      * @param spnList -- list of data to load
      * @param position -- set selection
      */
-    public static void loadSpinner(Context context, Spinner spn,List<SpinnerObject> spnList,int position){
+    public static void loadSpinner(Context context, Spinner spn, List<SpinnerObject> spnList, int position){
 
         try{
             ArrayAdapter dataAdapter = new ArrayAdapter<SpinnerObject>(context, R.layout.simple_spinner_item, spnList);
@@ -350,6 +353,24 @@ public class Utility {
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
             activity.startActivityForResult(intent, REQUEST_TAKE_PHOTO);
         }
+    }
+
+    public static Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public static String getPath(Context context,Uri contentUri) {
+        String[] proj = new String[]{MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
     }
 
     /** Display Images on Dialog
