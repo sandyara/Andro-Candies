@@ -31,10 +31,6 @@ public class SpinnerObject {
 
     @Override
     public String toString() {
-        return "SpinnerObject{" +
-                "Code='" + Code + '\'' +
-                ", Value='" + Value + '\'' +
-                ", extras='" + extras + '\'' +
-                '}';
+        return getValue();
     }
 }

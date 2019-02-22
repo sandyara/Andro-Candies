@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -58,6 +57,14 @@ public class AraRequestQueue {
         getRequestQueue(context).add(req);
     }
 
+    /**
+     * if (noInternet) Request will store in Offline
+     * else if (Internet) Request add to mRequestQueue
+     *
+     * @param context
+     * @param req
+     * @param <T>
+     */
     public static <T> void addInBackground(Context context, Request<T> req){
 
         if (req.getMethod() != POST){
@@ -75,21 +82,21 @@ public class AraRequestQueue {
     }
 
 
-    public static void saveOffline(Context context){
-        SharedPreferences pref = context.getSharedPreferences("OFFLINE_DATA", Context.MODE_PRIVATE);
-        String json = pref.getString("REQUEST", "");
-        Type type = new TypeToken<ArrayList<AraRequestModal>>(){}.getType();
-
-        Gson gson = new Gson();
-        ArrayList<AraRequestModal> offlineRequest = gson.fromJson(json, type);
+    /**
+     * Execute Request and Save Offline to Cloud
+     * @param context
+     */
+    public static void saveOffline(final Context context){
+        ArrayList<AraRequestModal> offlineRequest = getOfflineRequest(context);
 
         if (offlineRequest == null){
             return;
         } else if (!offlineRequest.isEmpty()){
             Toast.makeText(context, "Storing offline data...", Toast.LENGTH_SHORT).show();
         }
+        Gson gson = new Gson();
 
-        for(AraRequestModal req: offlineRequest){
+        for(final AraRequestModal req: offlineRequest){
             Map<String,String> params = new HashMap<>();
             params = (Map<String, String>) gson.fromJson(req.getParams(),params.getClass());
 
@@ -101,7 +108,7 @@ public class AraRequestQueue {
                     new Response.Listener() {
                         @Override
                         public void onResponse(Object response) {
-
+                            getOfflineRequest(context).remove(req);
                         }
                     },
                     new Response.ErrorListener() {
@@ -121,13 +128,17 @@ public class AraRequestQueue {
         editor.apply();
     }
 
+    /**
+     * Save Request in Offline
+     *
+     * @param context
+     * @param request
+     * @param <T>
+     */
     public static <T> void setOfflineRequest(Context context,Request<T> request){
-        SharedPreferences pref = context.getSharedPreferences("OFFLINE_DATA", Context.MODE_PRIVATE);
-        String json = pref.getString("REQUEST", "");
-        Type type = new TypeToken<ArrayList<AraRequestModal>>(){}.getType();
+        ArrayList<AraRequestModal> offlineRequest = getOfflineRequest(context);
 
         Gson gson = new Gson();
-        ArrayList<AraRequestModal> offlineRequest = gson.fromJson(json, type);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences("OFFLINE_DATA", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -172,6 +183,21 @@ public class AraRequestQueue {
         editor.putString("REQUEST", gson.toJson(offlineRequest));
 
         editor.apply();
+    }
+
+    /**
+     * Get Request Stored on Offline
+     *
+     * @param context
+     * @return
+     */
+    public static ArrayList<AraRequestModal> getOfflineRequest(Context context){
+        SharedPreferences pref = context.getSharedPreferences("OFFLINE_DATA", Context.MODE_PRIVATE);
+        String json = pref.getString("REQUEST", "");
+        Type type = new TypeToken<ArrayList<AraRequestModal>>(){}.getType();
+
+        Gson gson = new Gson();
+        return gson.fromJson(json, type);
     }
 
 }

@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.support.annotation.StyleRes;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import ara.sandy.candies.R;
 import ara.sandy.candies.volley.AraRequestQueue;
